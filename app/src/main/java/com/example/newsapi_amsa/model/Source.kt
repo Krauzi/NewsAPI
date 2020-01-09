@@ -6,5 +6,5 @@ data class Source(
     @SerializedName("id")
     var id: Any,
     @SerializedName("name")
-    var name: String
+    var name: String = ""
 )

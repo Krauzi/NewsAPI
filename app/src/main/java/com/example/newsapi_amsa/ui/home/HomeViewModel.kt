@@ -1,13 +1,17 @@
 package com.example.newsapi_amsa.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import com.example.newsapi_amsa.repositories.NewsRepository
+import kotlinx.coroutines.Dispatchers
 
 class HomeViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    val repository: NewsRepository = NewsRepository()
+
+    val news = liveData(Dispatchers.IO) {
+        val retrivedNews = repository.getNews("pl")
+
+        emit(retrivedNews.articles)
     }
-    val text: LiveData<String> = _text
 }

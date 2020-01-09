@@ -10,9 +10,9 @@ data class News(
     @SerializedName("articles")
     var articles: List<Article>,
     @SerializedName("status")
-    var status: String,
+    var status: String = "",
     @SerializedName("totalResults")
-    var totalResults: Int
+    var totalResults: Int = 0
 ) {
     @PrimaryKey
     @SerializedName("id")
