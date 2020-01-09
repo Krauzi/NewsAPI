@@ -1,7 +1,10 @@
 package com.example.newsapi_amsa.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "articlesLocal_table")
 data class Article(
     @SerializedName("author")
     var author: String,
@@ -19,4 +22,8 @@ data class Article(
     var url: String,
     @SerializedName("urlToImage")
     var urlToImage: String
-)
+) {
+    @PrimaryKey
+    @SerializedName("id")
+    var id: Long = 0
+}
