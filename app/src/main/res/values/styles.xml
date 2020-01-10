@@ -1,11 +1,19 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorJet</item>
+        <item name="colorPrimaryDark">@color/colorCharlestonGreen</item>
+        <item name="colorAccent">@color/colorFulvous</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:fontFamily">"sans-serif-condensed"</item>
+        <item name="fontFamily">"sans-serif-condensed"</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColorPrimary">@color/colorOriolesOrange</item>
+        <item name="android:textColorSecondary">@color/colorOriolesOrange</item>
     </style>
 
 </resources>

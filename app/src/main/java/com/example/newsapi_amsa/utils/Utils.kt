@@ -1,4 +1,4 @@
-package com.example.newsapi_amsa
+package com.example.newsapi_amsa.utils
 
 import java.text.ParseException
 import java.text.SimpleDateFormat

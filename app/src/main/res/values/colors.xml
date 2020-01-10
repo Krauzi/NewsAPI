@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">@color/colorJet</color>
+    <color name="colorPrimaryDark">@color/colorCharlestonGreen</color>
+    <color name="colorAccent">@color/colorFulvous</color>
+
+
+    <color name="colorIsabelline">#f6f7eb</color>
+    <color name="colorOriolesOrange">#e94f16</color>
+    <color name="colorBlackOlive">#3B3F42</color>
+    <color name="colorJet">#2E3235</color>
+    <color name="colorCharlestonGreen">#22272d</color>
+    <color name="colorFulvous">#e28413</color>
 </resources>

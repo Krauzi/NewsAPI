@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">NewsAPI_AMSA</string>
+    <string name="app_display_name">NewsApp</string>
     <string name="title_home">Strona główna</string>
     <string name="title_bookmarks">Zakładki</string>
     <string name="title_search">Szukaj</string>
