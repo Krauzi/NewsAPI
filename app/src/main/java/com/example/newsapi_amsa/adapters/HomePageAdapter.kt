@@ -46,8 +46,8 @@ class HomePageAdapter(val onItemClick: (Article) -> Unit) : RecyclerView.Adapter
         Glide.with(holder.articleImageView)
             .load(article.urlToImage)
             .centerCrop()
-            .error(R.drawable.ic_image_error)
-            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .error(R.drawable.ic_error_red_72dp)
+            .diskCacheStrategy(DiskCacheStrategy.DATA)
             .listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(p0: GlideException?, model: Any?, p2: Target<Drawable>?, p3: Boolean): Boolean {
                     holder.articleProgressBar.visibility = View.GONE
@@ -57,7 +57,8 @@ class HomePageAdapter(val onItemClick: (Article) -> Unit) : RecyclerView.Adapter
                     holder.articleProgressBar.visibility = View.GONE
                     return false
                 }
-            }).transition(DrawableTransitionOptions.withCrossFade())
+            })
+            .transition(DrawableTransitionOptions.withCrossFade())
             .into(holder.articleImageView)
     }
 

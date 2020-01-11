@@ -5,18 +5,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapi_amsa.R
 import com.example.newsapi_amsa.adapters.HomePageAdapter
 import com.example.newsapi_amsa.model.Article
-import org.w3c.dom.Text
+import com.example.newsapi_amsa.ui.DisplayNewsFragment
+
 
 class HomeFragment : Fragment() {
 
@@ -24,7 +25,7 @@ class HomeFragment : Fragment() {
     lateinit var thisPageAdapter: HomePageAdapter
     private lateinit var recyclerView: RecyclerView
 
-
+    private val BACK_STACK_ROOT_TAG = "root_fragment"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,6 +49,12 @@ class HomeFragment : Fragment() {
     private fun recyclerLoad() {
 
         thisPageAdapter = HomePageAdapter {
+            childFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, DisplayNewsFragment(it))
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .addToBackStack(BACK_STACK_ROOT_TAG)
+                .commit()
+
             Log.d("item", "Article: ${it.title}")
         }
 

@@ -4,4 +4,10 @@
     <string name="title_home">Strona główna</string>
     <string name="title_bookmarks">Zakładki</string>
     <string name="title_search">Szukaj</string>
+    <string name="src_info_label">Przejdź do strony źródłówej:</string>
+    <string name="src_button">Źródło strony</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

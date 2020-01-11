@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.newsapi_amsa.R
 
-class SearchFragment : Fragment() {
+class SearchResultsFragment : Fragment() {
 
     private lateinit var searchViewModel: SearchViewModel
 
@@ -19,9 +19,13 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        searchViewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_search, container, false)
-
+        searchViewModel =
+            ViewModelProviders.of(this).get(SearchViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_search_results, container, false)
+        val textView: TextView = root.findViewById(R.id.text_notifications)
+        searchViewModel.text.observe(this, Observer {
+            textView.text = it
+        })
         return root
     }
 }
