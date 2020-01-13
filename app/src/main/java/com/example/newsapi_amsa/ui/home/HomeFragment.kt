@@ -16,7 +16,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapi_amsa.R
 import com.example.newsapi_amsa.adapters.HomePageAdapter
 import com.example.newsapi_amsa.model.Article
+import com.example.newsapi_amsa.model.News
 import com.example.newsapi_amsa.ui.DisplayNewsFragment
+import com.example.newsapi_amsa.utils.Resource
+import com.example.newsapi_amsa.utils.Status
 
 
 class HomeFragment : Fragment() {
@@ -39,8 +42,11 @@ class HomeFragment : Fragment() {
         recyclerLoad()
 
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        homeViewModel.news.observe(this, Observer<List<Article>> {
-                t -> thisPageAdapter.setArticles(t!!)
+        homeViewModel.news.observe(this, Observer<Resource<News>> {
+            when (it.status) {
+                Status.SUCCESS -> thisPageAdapter.setArticles(it.data!!.articles)
+                Status.ERROR -> thisPageAdapter.setArticles(mutableListOf())
+            }
         })
 
         return root
