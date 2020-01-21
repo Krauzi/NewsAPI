@@ -21,7 +21,8 @@ data class Article(
     @SerializedName("url")
     var url: String = "",
     @SerializedName("urlToImage")
-    var urlToImage: String = ""
+    var urlToImage: String = "",
+    var inDataBase: Boolean = false
 ) {
     @PrimaryKey
     @SerializedName("id")

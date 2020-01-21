@@ -54,7 +54,7 @@ class HomeFragment : Fragment() {
 
     private fun recyclerLoad() {
 
-        thisPageAdapter = HomePageAdapter {
+        thisPageAdapter = HomePageAdapter ({
             childFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, DisplayNewsFragment(it))
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -62,7 +62,9 @@ class HomeFragment : Fragment() {
                 .commit()
 
             Log.d("item", "Article: ${it.title}")
-        }
+        }, {
+            // STUFF
+        })
 
         recyclerView.apply{
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,false)
