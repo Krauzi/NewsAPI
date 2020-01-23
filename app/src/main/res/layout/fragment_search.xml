@@ -8,21 +8,19 @@
     android:background="@color/colorBlackOlive"
     tools:context=".ui.search.SearchFragment"
     android:clickable="true"
-    android:layout_marginTop="?attr/actionBarSize"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
 
     <TextView
         android:id="@+id/lang_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="500dp"
         android:background="@color/colorCharlestonGreen"
         android:elevation="6dp"
         android:fontFamily="sans-serif-condensed"
         android:paddingStart="12dp"
-        android:paddingEnd="12dp"
         android:paddingTop="6dp"
+        android:paddingEnd="12dp"
         android:paddingBottom="6dp"
         android:text="@string/lang_label"
         android:textColor="@color/colorIsabelline"
@@ -33,7 +31,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.092" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Spinner
         android:id="@+id/lang_spinner"
@@ -229,5 +227,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sort_spinner"
         app:layout_constraintVertical_bias="0.0" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

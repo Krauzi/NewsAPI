@@ -28,7 +28,7 @@
             <ImageView
                 android:id="@+id/image_imageView"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="200dp"
                 android:transitionName="newsImage"
                 android:scaleType="centerCrop"/>
 
@@ -39,7 +39,7 @@
                 android:src="@drawable/ic_star_border_white_32dp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="8dp"
-                android:layout_marginTop="140dp"
+                android:layout_marginTop="160dp"
                 android:background="#88000000" />
 
             <ProgressBar
