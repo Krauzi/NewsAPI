@@ -1,19 +1,25 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorJet</item>
         <item name="colorPrimaryDark">@color/colorCharlestonGreen</item>
         <item name="colorAccent">@color/colorFulvous</item>
+        <item name="actionBarStyle">@style/ActionBarTheme</item>
+        <item name="android:actionBarStyle">@style/ActionBarTheme</item>
     </style>
 
-    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:fontFamily">"sans-serif-condensed"</item>
-        <item name="fontFamily">"sans-serif-condensed"</item>
+    <style name="ActionBarTheme" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/colorCharlestonGreen</item>
+        <item name="titleTextStyle">@style/ActionBarTitle</item>
+
+    </style>
+
+    <style name="ActionBarTitle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textStyle">bold</item>
-        <item name="android:textColorPrimary">@color/colorOriolesOrange</item>
-        <item name="android:textColorSecondary">@color/colorOriolesOrange</item>
+        <item name="android:textColor">@color/colorOriolesOrange</item>
+        <item name="android:fontFamily">"sans-serif-condensed"</item>
     </style>
 
 </resources>
