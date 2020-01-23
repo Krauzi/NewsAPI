@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.newsapi_amsa.database.NewsDatabase
 
 class BookmarksViewModel : ViewModel() {
-
     private val _text = MutableLiveData<String>().apply {
         value = "This is dashboard Fragment"
     }

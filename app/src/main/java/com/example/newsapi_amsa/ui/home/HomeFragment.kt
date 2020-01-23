@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapi_amsa.R
 import com.example.newsapi_amsa.adapters.HomePageAdapter
-import com.example.newsapi_amsa.model.Article
 import com.example.newsapi_amsa.model.News
 import com.example.newsapi_amsa.ui.DisplayNewsFragment
 import com.example.newsapi_amsa.utils.Resource
@@ -63,7 +61,16 @@ class HomeFragment : Fragment() {
 
             Log.d("item", "Article: ${it.title}")
         }, {
-            // STUFF
+            //ADDING
+            if(it.bookmark == 0){
+                it.bookmark = 1
+                homeViewModel.insertNews(it)
+            }
+            //DELETING
+            else if(it.bookmark == 1){
+                it.bookmark = 0
+                homeViewModel.removeNews(it)
+            }
         })
 
         recyclerView.apply{

@@ -1,5 +1,6 @@
 package com.example.newsapi_amsa.model
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
@@ -15,6 +16,7 @@ data class Article(
     @SerializedName("publishedAt")
     var publishedAt: String = "",
     @SerializedName("source")
+    @Embedded(prefix = "source_")
     var source: Source,
     @SerializedName("title")
     var title: String = "",
@@ -22,9 +24,10 @@ data class Article(
     var url: String = "",
     @SerializedName("urlToImage")
     var urlToImage: String = "",
-    var inDataBase: Boolean = false
+    var inDataBase: Boolean = false,
+    var bookmark: Int = 0
 ) {
-    @PrimaryKey
-    @SerializedName("id")
+    @PrimaryKey(autoGenerate = true)
+    @SerializedName("article_id")
     var id: Long = 0
 }
