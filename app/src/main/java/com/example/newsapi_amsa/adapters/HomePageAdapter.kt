@@ -1,6 +1,7 @@
 package com.example.newsapi_amsa.adapters
 
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.Icon
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +35,13 @@ class HomePageAdapter(val onItemClick: (Article) -> Unit, val onButtonAddClick: 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var article = articleList[position]
+
+//        if(article.bookmark == 1){
+//            holder.articleButtonAdd.setImageResource(R.drawable.ic_star_white_32dp)
+//        }
+//        else if(article.bookmark == 0){
+//            holder.articleButtonAdd.setImageResource(R.drawable.ic_star_border_white_32dp)
+//        }
 
         holder.articleTitleText.text = article.title
         holder.articleDescriptionText.text = article.description
@@ -81,7 +89,16 @@ class HomePageAdapter(val onItemClick: (Article) -> Unit, val onButtonAddClick: 
 
             articleButtonAdd.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) {
-                    onButtonAddClick(articleList[adapterPosition])
+                    var temp = articleList[adapterPosition]
+                    onButtonAddClick(temp)
+
+                    //changing icon
+                    if(temp.bookmark == 1){
+                        articleButtonAdd.setImageResource(R.drawable.ic_star_white_32dp)
+                    }
+                    else if(temp.bookmark == 0){
+                        articleButtonAdd.setImageResource(R.drawable.ic_star_border_white_32dp)
+                    }
                 }
             }
         }
