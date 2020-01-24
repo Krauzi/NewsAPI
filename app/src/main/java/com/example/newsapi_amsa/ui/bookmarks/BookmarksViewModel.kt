@@ -1,23 +1,41 @@
 package com.example.newsapi_amsa.ui.bookmarks
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.newsapi_amsa.database.NewsDatabase
+import android.app.Application
+import androidx.lifecycle.*
+import com.example.newsapi_amsa.model.Article
+import com.example.newsapi_amsa.model.database.NewsDatabase
+import com.example.newsapi_amsa.repositories.NewsRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
-class BookmarksViewModel : ViewModel() {
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+class BookmarksViewModel(application: Application): AndroidViewModel(application), CoroutineScope {
+    private val job = Job()
+    private val repository: NewsRepository
+
+    init {
+        val newsDao = NewsDatabase.getInstance(application)?.newsDao()
+        repository = NewsRepository(newsDao!!)
     }
-    val text: LiveData<String> = _text
 
-//    inline fun <T> LiveData<T>.filter(crossinline predicate : (T?)->Boolean): LiveData<T> {
-//        val mutableLiveData: MediatorLiveData<T> = MediatorLiveData()
-//        mutableLiveData.addSource(this) {
-//            if(predicate(it))
-//                mutableLiveData.value = it
-//        }
-//        return mutableLiveData
-//    }
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.IO
+
+    fun insertNews(article: Article) = launch{
+        repository.insertNews(article)
+    }
+
+    fun removeNews(article: Article) = launch{
+        repository.removeNews(article)
+    }
+
+    fun getLocalNews(id: Long) = launch{
+        repository.getLocalNews(id)
+    }
+
+    fun getAllLocalNews(): LiveData<List<Article>> {
+        return repository.getAllLocalNews()
+    }
 }

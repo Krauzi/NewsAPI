@@ -1,27 +1,19 @@
 package com.example.newsapi_amsa.repositories
 
-import android.app.Application
 import androidx.lifecycle.LiveData
-import com.example.newsapi_amsa.database.NewsDAO
-import com.example.newsapi_amsa.database.NewsDatabase
+import androidx.lifecycle.MutableLiveData
+import com.example.newsapi_amsa.model.database.NewsDAO
 import com.example.newsapi_amsa.model.Article
 import com.example.newsapi_amsa.model.News
 import com.example.newsapi_amsa.model.api.NewsAPI
 import com.example.newsapi_amsa.model.api.NewsInterface
-import com.example.newsapi_amsa.utils.Resource
-import com.example.newsapi_amsa.utils.ResponseHandler
+import com.example.newsapi_amsa.utils.*
 import kotlinx.coroutines.*
 
 
-class NewsRepository(application: Application) {
+class NewsRepository(private val newsDao: NewsDAO) {
     private var client: NewsInterface = NewsAPI.webservice
     private val responseHandler: ResponseHandler = ResponseHandler()
-    private var newsDao: NewsDAO
-
-    init {
-        val database: NewsDatabase= NewsDatabase.getInstance(application.applicationContext)!!
-        newsDao = database.newsDao()
-    }
 
     suspend fun getNews(country: String): Resource<News> {
         return try {
@@ -32,15 +24,23 @@ class NewsRepository(application: Application) {
         }
     }
 
-    fun insertNews(a: Article) = CoroutineScope(Dispatchers.IO).launch {
-        newsDao.insertNews(a)
+    suspend fun insertNews(article: Article) = CoroutineScope(Dispatchers.IO).launch {
+        newsDao.insertNews(article)
     }
 
-    fun removeNews(a: Article) = CoroutineScope(Dispatchers.IO).launch {
-        newsDao.deleteNews(a)
+    suspend fun removeNews(article: Article) = CoroutineScope(Dispatchers.IO).launch {
+        newsDao.deleteNews(article.id)
     }
 
-    fun getAllBookmarkedNews() = CoroutineScope(Dispatchers.IO).launch {
-        newsDao.getAllBookmarkedNews()
+    suspend fun removeAllNews() = CoroutineScope(Dispatchers.IO).launch {
+        newsDao.deleteAllNews()
+    }
+
+    fun getLocalNews(id: Long): Article {
+        return newsDao.getNews(id)
+    }
+
+    fun getAllLocalNews(): LiveData<List<Article>> {
+        return newsDao.getAllBookmarkedNews()
     }
 }

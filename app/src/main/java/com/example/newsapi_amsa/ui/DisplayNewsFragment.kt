@@ -8,7 +8,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -18,7 +17,7 @@ import com.example.newsapi_amsa.model.Article
 import com.example.newsapi_amsa.utils.Utils
 import kotlinx.android.synthetic.main.single_api_news.*
 
-class DisplayNewsFragment(val article: Article) : Fragment(), View.OnClickListener {
+class DisplayNewsFragment(val article: Article, val fromLocalDatabase: Boolean) : Fragment(), View.OnClickListener {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,25 +45,22 @@ class DisplayNewsFragment(val article: Article) : Fragment(), View.OnClickListen
 
         var image: ImageView = view?.findViewById(R.id.displayImage_imageView) as ImageView
 
-        if(article.bookmark == 1){
-            button_add.setImageResource(R.drawable.ic_star_white_32dp)
-        }
-        else if(article.bookmark == 0){
-            button_add.setImageResource(R.drawable.ic_star_border_white_32dp)
-        }
-
-        button_add.setOnClickListener {
-            //ADDING
-            if(article.bookmark == 0){
-                article.bookmark = 1
-                button_add.setImageResource(R.drawable.ic_star_white_32dp)
-            }
-            //DELETING
-            else if(article.bookmark == 1) {
-                article.bookmark = 0
-                button_add.setImageResource(R.drawable.ic_star_border_white_32dp)
-            }
-        }
+        button_add.visibility = View.GONE
+//        } else {
+//            button_add.setOnClickListener {
+//                //ADDING
+//                if(article.bookmark == 0){
+//                    article.bookmark = 1
+//                    button_add.setImageResource(R.drawable.ic_star_white_32dp)
+//
+//                }
+//                //DELETING
+//                else if(article.bookmark == 1) {
+//                    article.bookmark = 0
+//                    button_add.setImageResource(R.drawable.ic_star_border_white_32dp)
+//                }
+//            }
+//        }
 
         Glide.with(image)
             .load(article.urlToImage)

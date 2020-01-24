@@ -43,7 +43,10 @@ class HomeFragment : Fragment() {
         homeViewModel.news.observe(this, Observer<Resource<News>> {
             when (it.status) {
                 Status.SUCCESS -> thisPageAdapter.setArticles(it.data!!.articles)
-                Status.ERROR -> thisPageAdapter.setArticles(mutableListOf())
+                Status.ERROR -> {
+                    Log.d("ERROR", "NETWORK ERROR MESSAGE:"+ it.message)
+                    thisPageAdapter.setArticles(mutableListOf())
+                }
             }
         })
 
@@ -54,22 +57,22 @@ class HomeFragment : Fragment() {
 
         thisPageAdapter = HomePageAdapter ({
             childFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, DisplayNewsFragment(it))
+                .replace(R.id.home_fragment_container, DisplayNewsFragment(it, false))
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .addToBackStack(BACK_STACK_ROOT_TAG)
                 .commit()
 
             Log.d("item", "Article: ${it.title}")
         }, {
-            //ADDING
-            if(it.bookmark == 0){
-                it.bookmark = 1
-                homeViewModel.insertNews(it)
-            }
-            //DELETING
-            else if(it.bookmark == 1){
-                it.bookmark = 0
-                homeViewModel.removeNews(it)
+            when(it.bookmark) {
+                0 -> {
+                    it.bookmark = 1
+                    homeViewModel.insertNews(it)
+                }
+                1 -> {
+                    it.bookmark = 0
+                    homeViewModel.removeNews(it)
+                }
             }
         })
 
