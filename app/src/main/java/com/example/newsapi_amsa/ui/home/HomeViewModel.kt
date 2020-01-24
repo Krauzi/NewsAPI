@@ -1,10 +1,8 @@
 package com.example.newsapi_amsa.ui.home
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import android.util.Log
+import androidx.lifecycle.*
 import com.example.newsapi_amsa.model.Article
 import com.example.newsapi_amsa.model.News
 import com.example.newsapi_amsa.model.database.NewsDatabase
@@ -18,19 +16,26 @@ import kotlin.coroutines.CoroutineContext
 
 class HomeViewModel(application: Application): AndroidViewModel(application), CoroutineScope {
     private val job = Job()
-    private val repository: NewsRepository
+    private val repository: NewsRepository = NewsRepository(application)
+    private val reloadTrigger = MutableLiveData<Boolean>()
 
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.IO
 
-    init {
-        val newsDao = NewsDatabase.getInstance(application)?.newsDao()
-        repository = NewsRepository(newsDao!!)
+    private val news: LiveData<Resource<News>> = Transformations.switchMap(reloadTrigger) {
+        liveData(Dispatchers.IO) {
+            emit(Resource.loading(null))
+            emit(repository.getNews("pl"))
+        }
     }
 
-    val news: LiveData<Resource<News>> = liveData(Dispatchers.IO) {
-        emit(Resource.loading(null))
-        emit(repository.getNews("pl"))
+    fun refreshNews() {
+        reloadTrigger.value = true
+    }
+
+
+    fun getNews(): LiveData<Resource<News>> {
+        return news
     }
 
     fun insertNews(article: Article) = launch {

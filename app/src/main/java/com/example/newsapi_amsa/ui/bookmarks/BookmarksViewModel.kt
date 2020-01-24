@@ -13,12 +13,7 @@ import kotlin.coroutines.CoroutineContext
 
 class BookmarksViewModel(application: Application): AndroidViewModel(application), CoroutineScope {
     private val job = Job()
-    private val repository: NewsRepository
-
-    init {
-        val newsDao = NewsDatabase.getInstance(application)?.newsDao()
-        repository = NewsRepository(newsDao!!)
-    }
+    private val repository: NewsRepository = NewsRepository(application)
 
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.IO
