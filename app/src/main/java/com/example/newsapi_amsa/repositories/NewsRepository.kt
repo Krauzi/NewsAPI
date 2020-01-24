@@ -2,7 +2,6 @@ package com.example.newsapi_amsa.repositories
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.newsapi_amsa.model.database.NewsDAO
 import com.example.newsapi_amsa.model.Article
 import com.example.newsapi_amsa.model.News
@@ -44,7 +43,7 @@ class NewsRepository(application: Application) {
         newsDao.deleteAllNews()
     }
 
-    fun getLocalNews(id: Long): Article {
+    suspend fun getLocalNews(id: Long): Article {
         return newsDao.getNews(id)
     }
 
