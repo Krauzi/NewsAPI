@@ -4,7 +4,7 @@ import com.example.newsapi_amsa.model.News
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-private const val API_KEY = "f989f38417c1446f8d4af6180e35e23f"
+private const val API_KEY = "b4197cbfa98142518d69c2331f4b4cdd"
 
 interface NewsInterface {
     @GET("top-headlines")

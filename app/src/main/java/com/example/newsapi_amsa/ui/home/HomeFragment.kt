@@ -12,8 +12,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.newsapi_amsa.R
 import com.example.newsapi_amsa.adapters.HomePageAdapter
+import com.example.newsapi_amsa.model.Article
 import com.example.newsapi_amsa.model.News
 import com.example.newsapi_amsa.ui.DisplayNewsFragment
 import com.example.newsapi_amsa.utils.Resource
@@ -25,6 +27,7 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     lateinit var thisPageAdapter: HomePageAdapter
     private lateinit var recyclerView: RecyclerView
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     private val BACK_STACK_ROOT_TAG = "root_fragment"
 
@@ -36,42 +39,49 @@ class HomeFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
 
         recyclerView = root.findViewById(R.id.articles_recyclerView)
+        swipeRefreshLayout = root.findViewById(R.id.swipe_to_refresh_home)
 
         recyclerLoad()
 
-        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        homeViewModel.news.observe(this, Observer<Resource<News>> {
-            when (it.status) {
-                Status.SUCCESS -> thisPageAdapter.setArticles(it.data!!.articles)
-                Status.ERROR -> thisPageAdapter.setArticles(mutableListOf())
-            }
-        })
+        homeViewModel = ViewModelProviders.of(activity!!).get(HomeViewModel::class.java)
+
+        fetchNews()
 
         return root
     }
 
     private fun recyclerLoad() {
+        swipeRefreshLayout.setOnRefreshListener {
+            homeViewModel.refreshNews()
+        }
 
-        thisPageAdapter = HomePageAdapter ({
+        thisPageAdapter = HomePageAdapter (
+            {
+            Log.d("Message", "Article item: $it")
+
             childFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, DisplayNewsFragment(it))
+                .replace(R.id.home_fragment_container, DisplayNewsFragment(it, false))
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .addToBackStack(BACK_STACK_ROOT_TAG)
                 .commit()
 
             Log.d("item", "Article: ${it.title}")
-        }, {
-            //ADDING
-            if(it.bookmark == 0){
-                it.bookmark = 1
-                homeViewModel.insertNews(it)
+        },
+            {
+            when(it.bookmark) {
+                0 -> {
+                    Log.d("Message", "Article item: $it")
+                    it.bookmark = 1
+                    homeViewModel.insertNews(it)
+                }
+                1 -> {
+                    Log.d("Message", "Article item: $it")
+                    it.bookmark = 0
+                    homeViewModel.removeNews(it)
+                }
             }
-            //DELETING
-            else if(it.bookmark == 1){
-                it.bookmark = 0
-                homeViewModel.removeNews(it)
-            }
-        })
+        }
+        )
 
         recyclerView.apply{
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,false)
@@ -80,4 +90,23 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun fetchNews() {
+        swipeRefreshLayout.isRefreshing = true
+        homeViewModel.getNews().observe(this, Observer<Resource<News>> {
+            displayNews(it)
+        })
+    }
+
+    private fun displayNews(it: Resource<News>) {
+        swipeRefreshLayout.isRefreshing = false
+
+        when (it.status) {
+            Status.SUCCESS -> thisPageAdapter.setArticles(it.data!!.articles)
+            Status.LOADING -> Log.d("Message", "Loading message.")
+            Status.ERROR -> {
+                Log.d("ERROR", "NETWORK ERROR MESSAGE:"+ it.message)
+                thisPageAdapter.setArticles(mutableListOf())
+            }
+        }
+    }
 }

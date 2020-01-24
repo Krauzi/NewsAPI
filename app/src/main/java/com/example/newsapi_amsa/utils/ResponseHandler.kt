@@ -23,9 +23,12 @@ open class ResponseHandler {
     private fun getErrorMessage(code: Int): String {
         return when (code) {
             ErrorCodes.SocketTimeOut.code -> "Timeout"
-            401 -> "Unauthorised"
+            400 -> "Bad Request. The request was unacceptable, often due to a missing or misconfigured parameter."
+            401 -> "Unauthorised. Your API key was missing from the request, or wasn't correct."
+            429 -> "Too Many Requests. You made too many requests within a window of time and have been rate limited. Back off for a while."
             404 -> "Not found"
-            else -> "Something went wrong"
+            500 -> "Something went wrong on our side."
+            else -> "Something else."
         }
     }
 }

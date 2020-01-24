@@ -36,13 +36,6 @@ class HomePageAdapter(val onItemClick: (Article) -> Unit, val onButtonAddClick: 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var article = articleList[position]
 
-//        if(article.bookmark == 1){
-//            holder.articleButtonAdd.setImageResource(R.drawable.ic_star_white_32dp)
-//        }
-//        else if(article.bookmark == 0){
-//            holder.articleButtonAdd.setImageResource(R.drawable.ic_star_border_white_32dp)
-//        }
-
         holder.articleTitleText.text = article.title
         holder.articleDescriptionText.text = article.description
         holder.articleSourceText.text =
@@ -89,14 +82,14 @@ class HomePageAdapter(val onItemClick: (Article) -> Unit, val onButtonAddClick: 
 
             articleButtonAdd.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) {
-                    var temp = articleList[adapterPosition]
-                    onButtonAddClick(temp)
+                    var article = articleList[adapterPosition]
+                    onButtonAddClick(article)
 
                     //changing icon
-                    if(temp.bookmark == 1){
+                    if(article.bookmark == 1){
                         articleButtonAdd.setImageResource(R.drawable.ic_star_white_32dp)
                     }
-                    else if(temp.bookmark == 0){
+                    else {
                         articleButtonAdd.setImageResource(R.drawable.ic_star_border_white_32dp)
                     }
                 }
