@@ -37,7 +37,7 @@ class NewsRepository(application: Application) {
     }
 
     suspend fun removeNews(article: Article) = CoroutineScope(Dispatchers.IO).launch {
-        newsDao.deleteNews(article.id)
+        newsDao.deleteNews(article)
     }
 
     suspend fun removeAllNews() = CoroutineScope(Dispatchers.IO).launch {

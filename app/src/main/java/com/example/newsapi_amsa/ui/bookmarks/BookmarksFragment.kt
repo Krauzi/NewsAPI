@@ -17,6 +17,7 @@ import com.example.newsapi_amsa.adapters.BookmarksAdapter
 import com.example.newsapi_amsa.model.Article
 import com.example.newsapi_amsa.ui.DisplayNewsFragment
 
+
 class BookmarksFragment : Fragment() {
 
     private lateinit var bookmarksViewModel: BookmarksViewModel

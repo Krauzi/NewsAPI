@@ -33,7 +33,6 @@ class HomeViewModel(application: Application): AndroidViewModel(application), Co
         reloadTrigger.value = true
     }
 
-
     fun getNews(): LiveData<Resource<News>> {
         return news
     }

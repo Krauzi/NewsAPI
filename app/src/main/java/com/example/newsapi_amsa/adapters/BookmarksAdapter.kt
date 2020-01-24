@@ -46,6 +46,10 @@ class BookmarksAdapter(val onItemClick: (Article) -> Unit) : RecyclerView.Adapte
         notifyDataSetChanged()
     }
 
+    fun getArticleAt(position: Int): Article {
+        return articleList[position]
+    }
+
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val articleTitleText: TextView = view.article_title
         val articleDescriptionText: TextView = view.article_description

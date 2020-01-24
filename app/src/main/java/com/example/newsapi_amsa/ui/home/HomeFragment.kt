@@ -45,15 +45,20 @@ class HomeFragment : Fragment() {
 
         homeViewModel = ViewModelProviders.of(activity!!).get(HomeViewModel::class.java)
 
-        setUpUi()
         fetchNews()
 
         return root
     }
 
     private fun recyclerLoad() {
+        swipeRefreshLayout.setOnRefreshListener {
+            homeViewModel.refreshNews()
+        }
 
-        thisPageAdapter = HomePageAdapter ({
+        thisPageAdapter = HomePageAdapter (
+            {
+            Log.d("Message", "Article item: $it")
+
             childFragmentManager.beginTransaction()
                 .replace(R.id.home_fragment_container, DisplayNewsFragment(it, false))
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -61,18 +66,22 @@ class HomeFragment : Fragment() {
                 .commit()
 
             Log.d("item", "Article: ${it.title}")
-        }, {
+        },
+            {
             when(it.bookmark) {
                 0 -> {
+                    Log.d("Message", "Article item: $it")
                     it.bookmark = 1
                     homeViewModel.insertNews(it)
                 }
                 1 -> {
+                    Log.d("Message", "Article item: $it")
                     it.bookmark = 0
                     homeViewModel.removeNews(it)
                 }
             }
-        })
+        }
+        )
 
         recyclerView.apply{
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,false)
@@ -98,12 +107,6 @@ class HomeFragment : Fragment() {
                 Log.d("ERROR", "NETWORK ERROR MESSAGE:"+ it.message)
                 thisPageAdapter.setArticles(mutableListOf())
             }
-        }
-    }
-
-    private fun setUpUi() {
-        swipeRefreshLayout.setOnRefreshListener {
-            homeViewModel.refreshNews()
         }
     }
 }
