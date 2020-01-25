@@ -70,12 +70,13 @@ class HomeFragment : Fragment() {
             {
             when(it.bookmark) {
                 0 -> {
-                    Log.d("Message", "Article item: $it")
+                    Log.d("Message", "Article item: ${it.id}")
                     it.bookmark = 1
+
                     homeViewModel.insertNews(it)
                 }
                 1 -> {
-                    Log.d("Message", "Article item: $it")
+                    Log.d("Message", "Article item: ${it.id}")
                     it.bookmark = 0
                     homeViewModel.removeNews(it)
                 }
@@ -92,7 +93,7 @@ class HomeFragment : Fragment() {
 
     private fun fetchNews() {
         swipeRefreshLayout.isRefreshing = true
-        homeViewModel.getNews().observe(this, Observer<Resource<News>> {
+        homeViewModel.getNews().observe(viewLifecycleOwner, Observer<Resource<News>> {
             displayNews(it)
         })
     }
