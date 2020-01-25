@@ -42,6 +42,6 @@ class SearchViewModel(application: Application): AndroidViewModel(application), 
     }
 
     fun removeNews(article: Article) = launch {
-        repository.removeNews(article)
+        repository.deleteNews(article)
     }
 }

@@ -36,7 +36,18 @@ class Utils {
             return formatter.format(calendar.time)
         }
 
-        fun objectsEqual(a1: Article, a2: Article): Boolean {
+        fun bookmarkRemoteNews(local: List<Article>, remote: List<Article>): List<Article> {
+            for (i in remote.indices ) {
+                for (j in local.indices ) {
+                    if (objectsEqual(remote[i], local[j]))
+                        remote[i].bookmark = 1
+                }
+            }
+
+            return remote
+        }
+
+        private fun objectsEqual(a1: Article, a2: Article): Boolean {
             return (a1.publishedAt == a2.publishedAt
                     && a1.source.name == a2.source.name
                     && a1.url == a1.url

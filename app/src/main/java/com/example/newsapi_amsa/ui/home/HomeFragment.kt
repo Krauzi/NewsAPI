@@ -72,13 +72,12 @@ class HomeFragment : Fragment() {
                 0 -> {
                     Log.d("Message", "Article item: ${it.id}")
                     it.bookmark = 1
-
                     homeViewModel.insertNews(it)
                 }
                 1 -> {
                     Log.d("Message", "Article item: ${it.id}")
                     it.bookmark = 0
-                    homeViewModel.removeNews(it)
+                    homeViewModel.deleteNews(it)
                 }
             }
         }

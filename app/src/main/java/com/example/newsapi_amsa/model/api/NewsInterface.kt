@@ -5,7 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
-private const val API_KEY = "b4197cbfa98142518d69c2331f4b4cdd"
+private const val API_KEY = "x"
 
 interface NewsInterface {
     @GET("top-headlines")

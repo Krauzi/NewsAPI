@@ -41,6 +41,10 @@ class HomePageAdapter(val onItemClick: (Article) -> Unit, val onButtonAddClick: 
         holder.articleSourceText.text =
             String.format("%s, %s", article.source.name, Utils.formatDate(article.publishedAt))
 
+        if (article.bookmark == 1)
+            holder.articleButtonAdd.setImageResource(R.drawable.ic_star_white_32dp)
+        else holder.articleButtonAdd.setImageResource(R.drawable.ic_star_border_white_32dp)
+
         Glide.with(holder.articleImageView)
             .load(article.urlToImage)
             .centerCrop()

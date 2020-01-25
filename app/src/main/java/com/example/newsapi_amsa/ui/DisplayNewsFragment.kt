@@ -10,6 +10,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.newsapi_amsa.R
@@ -18,6 +21,9 @@ import com.example.newsapi_amsa.utils.Utils
 import kotlinx.android.synthetic.main.single_api_news.*
 
 class DisplayNewsFragment(val article: Article, val fromLocalDatabase: Boolean) : Fragment(), View.OnClickListener {
+    private lateinit var dispatcher : OnBackPressedDispatcher
+    private lateinit var callback: OnBackPressedCallback
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,12 +33,15 @@ class DisplayNewsFragment(val article: Article, val fromLocalDatabase: Boolean) 
         return inflater.inflate(R.layout.fragment_display_news, container, false)
     }
 
-    override fun onContextItemSelected(item: MenuItem): Boolean {
-        return super.onContextItemSelected(item)
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        dispatcher = requireActivity().onBackPressedDispatcher
+        callback = dispatcher.addCallback(this) {
+            callback.isEnabled = false
+            // dispatcher.onBackPressed()
+            fragmentManager!!.popBackStack()
+        }
 
         var title = view?.findViewById(R.id.display_article_title) as TextView
         title.text = article.title
@@ -44,23 +53,6 @@ class DisplayNewsFragment(val article: Article, val fromLocalDatabase: Boolean) 
         dataSource.text = String.format("%s, %s", article.source.name, Utils.formatDate(article.publishedAt))
 
         var image: ImageView = view?.findViewById(R.id.displayImage_imageView) as ImageView
-
-        button_add.visibility = View.GONE
-//        } else {
-//            button_add.setOnClickListener {
-//                //ADDING
-//                if(article.bookmark == 0){
-//                    article.bookmark = 1
-//                    button_add.setImageResource(R.drawable.ic_star_white_32dp)
-//
-//                }
-//                //DELETING
-//                else if(article.bookmark == 1) {
-//                    article.bookmark = 0
-//                    button_add.setImageResource(R.drawable.ic_star_border_white_32dp)
-//                }
-//            }
-//        }
 
         Glide.with(image)
             .load(article.urlToImage)

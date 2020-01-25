@@ -41,11 +41,11 @@ class HomeViewModel(application: Application): AndroidViewModel(application), Co
         repository.insertNews(article)
     }
 
-    fun removeNews(article: Article) = launch {
-        repository.removeNews(article)
+    fun deleteNews(article: Article) = launch {
+        repository.deleteNews(article)
     }
 
-    fun removeAllNews() = launch {
-        repository.removeAllNews()
+    fun deleteAllNews() = launch {
+        repository.deleteAllNews()
     }
 }
