@@ -21,5 +21,4 @@
         <item name="android:textColor">@color/colorOriolesOrange</item>
         <item name="android:fontFamily">"sans-serif-condensed"</item>
     </style>
-
 </resources>

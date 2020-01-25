@@ -31,12 +31,21 @@ class NewsRepository(application: Application) {
         }
     }
 
+    suspend fun getQueryNews(data: HashMap<String, String>): Resource<News> {
+        return try {
+            val response = client.getQueryNews(data)
+            return responseHandler.handleSuccess(response)
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
+
     suspend fun insertNews(article: Article) = CoroutineScope(Dispatchers.IO).launch {
         newsDao.insertNews(article)
     }
 
     suspend fun removeNews(article: Article) = CoroutineScope(Dispatchers.IO).launch {
-        newsDao.deleteNews(article)
+        newsDao.deleteNews(article.title, article.publishedAt, article.bookmark)
     }
 
     suspend fun removeAllNews() = CoroutineScope(Dispatchers.IO).launch {

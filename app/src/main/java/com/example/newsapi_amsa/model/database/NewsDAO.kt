@@ -6,10 +6,10 @@ import com.example.newsapi_amsa.model.Article
 
 @Dao
 interface NewsDAO {
-    @Query("SELECT * FROM articles_table WHERE bookmark = 1")
+    @Query("SELECT * FROM articles_table WHERE bookmark = 1 ORDER BY id DESC")
     fun getAllBookmarkedNews(): LiveData<List<Article>>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertNews(article: Article)
 
     @Update
@@ -18,9 +18,8 @@ interface NewsDAO {
     @Query("SELECT * FROM articles_table WHERE id=:id")
     suspend fun getNews(id: Long): Article
 
-    @Delete
-    suspend fun deleteNews(article: Article)
-
+    @Query("DELETE FROM articles_table WHERE title=:title AND publishedAt=:publishedAt AND bookmark=:bookmark")
+    suspend fun deleteNews(title: String, publishedAt: String, bookmark: Int)
     @Query("DELETE FROM articles_table")
     suspend fun deleteAllNews()
 }

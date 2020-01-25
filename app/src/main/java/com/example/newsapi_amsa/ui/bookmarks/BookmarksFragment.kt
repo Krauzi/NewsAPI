@@ -40,7 +40,12 @@ class BookmarksFragment : Fragment() {
         recyclerLoad()
 
         bookmarksViewModel.getAllLocalNews().observe(this, Observer<List<Article>> {
-                t -> thisPageAdapter.setArticles(t!!)
+                t -> run {
+                t.forEach {
+                    Log.d("LocalID", "Local article id ${it.id}")
+                }
+                thisPageAdapter.setArticles(t!!)
+            }
         })
         return root
     }
