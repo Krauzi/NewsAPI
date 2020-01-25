@@ -10,12 +10,14 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapi_amsa.R
 import com.example.newsapi_amsa.adapters.BookmarksAdapter
 import com.example.newsapi_amsa.model.Article
 import com.example.newsapi_amsa.ui.DisplayNewsFragment
+import com.example.newsapi_amsa.utils.SwipeToDeleteCallback
 
 
 class BookmarksFragment : Fragment() {
@@ -60,5 +62,16 @@ class BookmarksFragment : Fragment() {
             itemAnimator = DefaultItemAnimator()
             adapter = thisPageAdapter
         }
+
+        val swipeHandler = object : SwipeToDeleteCallback(activity!!.applicationContext) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = recyclerView.adapter as BookmarksAdapter
+                val news = adapter.getArticleAt(viewHolder.adapterPosition)
+                adapter.removeAt(viewHolder.adapterPosition)
+                bookmarksViewModel.deleteNews(news)
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 }
