@@ -47,7 +47,7 @@ class Utils {
             return remote
         }
 
-        private fun objectsEqual(a1: Article, a2: Article): Boolean {
+        fun objectsEqual(a1: Article, a2: Article): Boolean {
             return (a1.publishedAt == a2.publishedAt
                     && a1.source.name == a2.source.name
                     && a1.url == a1.url

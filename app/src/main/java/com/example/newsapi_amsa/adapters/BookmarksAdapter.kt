@@ -46,6 +46,11 @@ class BookmarksAdapter(val onItemClick: (Article) -> Unit) : RecyclerView.Adapte
         notifyDataSetChanged()
     }
 
+    fun insertAt(position: Int, article: Article) {
+        articleList.add(position, article)
+        notifyItemInserted(position)
+    }
+
     fun removeAt(position: Int) {
         articleList.removeAt(position)
         notifyItemRemoved(position)

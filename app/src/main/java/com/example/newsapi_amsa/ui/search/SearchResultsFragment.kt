@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
@@ -18,6 +19,7 @@ import com.example.newsapi_amsa.adapters.HomePageAdapter
 import com.example.newsapi_amsa.model.News
 import com.example.newsapi_amsa.ui.DisplayNewsFragment
 import com.example.newsapi_amsa.utils.*
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class SearchResultsFragment(val data: HashMap<String, String>) : Fragment() {
 
@@ -53,30 +55,24 @@ class SearchResultsFragment(val data: HashMap<String, String>) : Fragment() {
             searchViewModel.refreshNews(data)
         }
 
-        thisPageAdapter = HomePageAdapter (
-            {
-                Log.d("Message", "Article item: $it")
-
-                childFragmentManager.beginTransaction()
+        thisPageAdapter = HomePageAdapter ({
+            childFragmentManager.beginTransaction()
                     .replace(R.id.search_results_fragment_container, DisplayNewsFragment(it, false))
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .addToBackStack(BACK_STACK_ROOT_TAG)
                     .commit()
-
-                Log.d("item", "Article: ${it.title}")
             },
             {
                 when(it.bookmark) {
                     0 -> {
-                        Log.d("Message", "Article item: ${it.id}")
                         it.bookmark = 1
-
                         searchViewModel.insertNews(it)
+                        Toast.makeText(context, R.string.toast_added, Toast.LENGTH_LONG).show()
                     }
                     1 -> {
-                        Log.d("Message", "Article item: ${it.id}")
                         it.bookmark = 0
                         searchViewModel.removeNews(it)
+                        Toast.makeText(context, R.string.toast_removed, Toast.LENGTH_LONG).show()
                     }
                 }
             }
@@ -101,11 +97,14 @@ class SearchResultsFragment(val data: HashMap<String, String>) : Fragment() {
         swipeRefreshLayout.isRefreshing = false
 
         when (it.status) {
-            Status.SUCCESS -> thisPageAdapter.setArticles(it.data!!.articles)
+            Status.SUCCESS -> {
+                error_message.visibility = View.GONE
+                thisPageAdapter.setArticles(it.data!!.articles)
+            }
             Status.LOADING -> Log.d("Message", "Loading message.")
             Status.ERROR -> {
-                Log.d("ERROR", "NETWORK ERROR MESSAGE:"+ it.message)
                 thisPageAdapter.setArticles(mutableListOf())
+                error_message.visibility = View.VISIBLE
             }
         }
     }

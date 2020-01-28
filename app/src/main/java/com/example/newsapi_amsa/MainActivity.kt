@@ -7,13 +7,11 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.newsapi_amsa.model.database.NewsDatabase
 import com.example.newsapi_amsa.ui.home.HomeViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class MainActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,7 +21,10 @@ class MainActivity : AppCompatActivity() {
         // Fetching new news only on swipe to refresh
         var homeViewModel: HomeViewModel =
             ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        homeViewModel.refreshNews()
+
+        val data: HashMap<String, String> = HashMap()
+        data["country"] = "pl"
+        homeViewModel.refreshNews(data, true)
 
         val navController = findNavController(R.id.nav_host_fragment)
 

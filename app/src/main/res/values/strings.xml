@@ -19,6 +19,13 @@
     <string name="from_label">Artykuły nie starsze niż:</string>
     <string name="sort_label">Sortuj według:</string>
 
+    <!-- SNACK BAR -->
+    <string name="snackbar_message">Usunięto news. Czy chcesz go przywrócić?</string>
+    <string name="undo_message">Przywróć</string>
+
+    <!-- TOASTS -->
+    <string name="toast_added">Dodano news do zakładek</string>
+    <string name="toast_removed">Usunięto news z zakładek</string>
 
     <string name="search_button">Szukaj</string>
 

@@ -17,18 +17,19 @@ class BookmarksViewModel(application: Application): AndroidViewModel(application
     private val job = Job()
     private val repository: NewsRepository = NewsRepository(application)
     private val news: LiveData<List<Article>> = liveData(Dispatchers.IO) {
-        emit(repository.getAllLocalNews())
-    }
+            emit(repository.getAllLocalNews())
+        }
 
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.IO
 
-    fun deleteNews(article: Article) = launch{
-        repository.deleteNews(article)
+
+    fun insertNews(article: Article) = launch {
+        repository.insertNews(article)
     }
 
-    suspend fun getLocalNews(id: Long) = launch{
-        repository.getLocalNews(id)
+    fun deleteNews(article: Article) = launch{
+        repository.deleteNews(article)
     }
 
     fun getAllLocalNews(): LiveData<List<Article>> {

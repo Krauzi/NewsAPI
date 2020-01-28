@@ -10,7 +10,7 @@ private const val API_KEY = "x"
 interface NewsInterface {
     @GET("top-headlines")
     suspend fun getNews(
-        @Query("country") country: String?,
+        @QueryMap options: HashMap<String, String>,
         @Query("apiKey") apiKey: String? = API_KEY
     ): News
 

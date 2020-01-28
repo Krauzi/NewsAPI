@@ -11,6 +11,7 @@ import com.example.newsapi_amsa.model.api.NewsInterface
 import com.example.newsapi_amsa.model.database.NewsDatabase
 import com.example.newsapi_amsa.utils.*
 import com.example.newsapi_amsa.utils.Utils.Companion.bookmarkRemoteNews
+import com.example.newsapi_amsa.utils.Utils.Companion.objectsEqual
 import kotlinx.coroutines.*
 
 
@@ -18,15 +19,16 @@ class NewsRepository(application: Application) {
     private var newsDao: NewsDAO
     private var client: NewsInterface = NewsAPI.webservice
     private val responseHandler: ResponseHandler = ResponseHandler()
+    private lateinit var response: News
 
     init {
         val newsDB: NewsDatabase = NewsDatabase.getInstance(application.applicationContext)!!
         newsDao = newsDB.newsDao()
     }
 
-    suspend fun getNews(country: String): Resource<News> {
+    suspend fun getNews(data: HashMap<String, String>): Resource<News> {
         return try {
-            var response = client.getNews(country)
+            response = client.getNews(data)
             val localNews = newsDao.getAllBookmarkedNews()
             response.articles = bookmarkRemoteNews(localNews, response.articles)
 
@@ -49,10 +51,12 @@ class NewsRepository(application: Application) {
     }
 
     suspend fun insertNews(article: Article) = CoroutineScope(Dispatchers.IO).launch {
+        article.bookmark = 1
         newsDao.insertNews(article)
     }
 
     suspend fun deleteNews(article: Article) = CoroutineScope(Dispatchers.IO).launch {
+        article.bookmark = 0
         newsDao.deleteNews(article.title, article.url, article.description, article.publishedAt)
     }
 
