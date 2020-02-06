@@ -52,12 +52,15 @@ class NewsRepository(application: Application) {
 
     suspend fun insertNews(article: Article) = CoroutineScope(Dispatchers.IO).launch {
         article.bookmark = 1
+        if (article.description == null || article.description == "null") {
+            article.description = ""
+        }
         newsDao.insertNews(article)
     }
 
     suspend fun deleteNews(article: Article) = CoroutineScope(Dispatchers.IO).launch {
         article.bookmark = 0
-        newsDao.deleteNews(article.title, article.url, article.description, article.publishedAt)
+        newsDao.deleteNews(article.title, article.url, article.description!!, article.publishedAt)
     }
 
     suspend fun deleteAllNews() = CoroutineScope(Dispatchers.IO).launch {

@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
 @Entity(tableName = "articles_table")
 data class Article(
     @SerializedName("description")
-    var description: String = "",
+    var description: String? = "",
     @SerializedName("publishedAt")
     var publishedAt: String = "",
     @SerializedName("source")
@@ -19,7 +19,7 @@ data class Article(
     @SerializedName("url")
     var url: String = "",
     @SerializedName("urlToImage")
-    var urlToImage: String = "",
+    var urlToImage: String? = "",
     var bookmark: Int = 0
 ) {
     @PrimaryKey(autoGenerate = true)

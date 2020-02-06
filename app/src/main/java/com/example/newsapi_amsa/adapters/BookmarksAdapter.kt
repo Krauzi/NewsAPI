@@ -1,5 +1,6 @@
 package com.example.newsapi_amsa.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,8 +28,7 @@ class BookmarksAdapter(val onItemClick: (Article) -> Unit) : RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var article = articleList[position]
-
+        val article = articleList[position]
         holder.articleTitleText.text = article.title
         holder.articleDescriptionText.text = article.description
         holder.articleSourceText.text =
@@ -38,6 +38,7 @@ class BookmarksAdapter(val onItemClick: (Article) -> Unit) : RecyclerView.Adapte
             .load(article.urlToImage)
             .onlyRetrieveFromCache(true)
             .error(R.drawable.ic_error_red_72dp)
+            .fallback(R.drawable.ic_error_red_72dp)
             .into(holder.articleImageView)
     }
 

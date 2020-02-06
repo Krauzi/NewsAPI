@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.newsapi_amsa.model.Article
 
-@Database(entities = [Article::class], version = 3)
+@Database(entities = [Article::class], version = 4)
 abstract class NewsDatabase : RoomDatabase() {
     abstract fun newsDao(): NewsDAO
 

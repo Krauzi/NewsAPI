@@ -84,6 +84,7 @@ class BookmarksFragment : Fragment() {
                             if (objectsEqual(news, list[i])) list[i].bookmark = 0
                         }
                     }
+                    else -> {}
                 }
 
                 val view: View = bookmarks_fragment_container
@@ -97,6 +98,7 @@ class BookmarksFragment : Fragment() {
                                     if (objectsEqual(news, list[i])) list[i].bookmark = 0
                                 }
                             }
+                            else -> {}
                         }
                         adapter.insertAt(position, news)
                     }.show()

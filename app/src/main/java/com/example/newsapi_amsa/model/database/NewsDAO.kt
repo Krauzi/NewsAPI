@@ -1,6 +1,5 @@
 package com.example.newsapi_amsa.model.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.newsapi_amsa.model.Article
 
@@ -9,7 +8,7 @@ interface NewsDAO {
     @Query("SELECT * FROM articles_table ORDER BY id DESC")
     fun getAllBookmarkedNews(): List<Article>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNews(article: Article)
 
     @Update
