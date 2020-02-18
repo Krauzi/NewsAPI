@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
@@ -46,6 +47,9 @@ class DisplayNewsFragment(val article: Article, val fromLocalDatabase: Boolean) 
         var title = view?.findViewById(R.id.display_article_title) as TextView
         title.text = article.title
 
+        var addButton = view?.findViewById(R.id.button_add) as ImageButton
+        addButton.visibility = View.GONE
+
         var description = view?.findViewById(R.id.display_article_description) as TextView
         description.text = article.description
 
@@ -63,7 +67,6 @@ class DisplayNewsFragment(val article: Article, val fromLocalDatabase: Boolean) 
         val srcButton = view?.findViewById(R.id.src_button) as Button
         srcButton.text = article.source.name.toLowerCase()
         srcButton.setOnClickListener(this)
-
     }
 
 

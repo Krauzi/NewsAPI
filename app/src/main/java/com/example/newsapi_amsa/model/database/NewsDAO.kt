@@ -6,7 +6,7 @@ import com.example.newsapi_amsa.model.Article
 @Dao
 interface NewsDAO {
     @Query("SELECT * FROM articles_table ORDER BY id DESC")
-    fun getAllBookmarkedNews(): List<Article>
+    suspend fun getAllBookmarkedNews(): List<Article>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNews(article: Article)

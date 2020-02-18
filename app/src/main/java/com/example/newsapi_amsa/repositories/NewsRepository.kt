@@ -71,7 +71,7 @@ class NewsRepository(application: Application) {
         return newsDao.getNews(id)
     }
 
-    fun getAllLocalNews(): List<Article> {
+    suspend fun getAllLocalNews(): List<Article> {
         return newsDao.getAllBookmarkedNews()
     }
 }

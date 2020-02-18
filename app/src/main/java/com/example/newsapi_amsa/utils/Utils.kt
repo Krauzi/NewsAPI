@@ -37,8 +37,8 @@ class Utils {
         }
 
         fun bookmarkRemoteNews(local: List<Article>, remote: List<Article>): List<Article> {
-            for (i in remote.indices ) {
-                for (j in local.indices ) {
+            for (i in remote.indices) {
+                for (j in local.indices) {
                     if (objectsEqual(remote[i], local[j]))
                         remote[i].bookmark = 1
                 }
